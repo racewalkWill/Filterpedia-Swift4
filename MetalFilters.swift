@@ -353,13 +353,20 @@ class MetalFilter: CIFilter, MetalRenderable
             let maxTotalThreadsPerThreadgroup = Double(pipelineState.maxTotalThreadsPerThreadgroup)
             let threadExecutionWidth = Double(pipelineState.threadExecutionWidth)
             
+
+
             var threadsPerThreadgroupSide = stride(from: 0,
+
                 to: Int(sqrt(maxTotalThreadsPerThreadgroup)),
                 by: 1).reduce(16)
             {
                 return (Double($1 * $1) / threadExecutionWidth).truncatingRemainder(dividingBy: 1) == 0 ? $1 : $0
             }
+
+  
+
             threadsPerThreadgroupSide = max(threadsPerThreadgroupSide, 1) // min of 1
+
 
             threadsPerThreadgroup = MTLSize(width:threadsPerThreadgroupSide,
                 height:threadsPerThreadgroupSide,
